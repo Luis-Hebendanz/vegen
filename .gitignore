@@ -1,6 +1,6 @@
 .cache
 .direnv
-++/__pycache__
+**/__pycache__
 compile_commands.json
 build/
 
