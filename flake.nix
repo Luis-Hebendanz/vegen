@@ -26,18 +26,6 @@
           };
         };
 
-        mycodium = import ./vscode.nix {
-          vscode = nixos-codium.packages.${system}.default;
-          inherit pkgs;
-          vscodeBaseDir = tmpdir + "/codium";
-          env = {
-            #HOME = tmpdir;
-            LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.libepoxy}/lib";
-          };
-        };
-
-
-
         # Debug OpenGL errors with
         # $ glxinfo | grep OpenGL
         nativeDeps = with pkgs; [
@@ -46,7 +34,9 @@
           cmake
           clang_12
           python3
+          llvmPackages_12.bintools
           compdb
+          lit
          # mycodium
         ];
         buildDeps = with pkgs; [
@@ -56,12 +46,11 @@
         ];
       in
       rec {
-
         devShell = with pkgs; mkShellNoCC {
           nativeBuildInputs = nativeDeps ++ buildDeps;
           buildInputs = buildDeps ++ nativeDeps;
-          hardeningDisable = [ "all" ];
           shellHook = ''
+            export hardeningDisable=all
           '';
         };
       });
