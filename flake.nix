@@ -51,6 +51,7 @@
           buildInputs = buildDeps ++ nativeDeps;
           shellHook = ''
             export hardeningDisable=all
+            export CLANGD_FLAGS="--query-driver="/nix/store/*-clang*/bin/*""
           '';
         };
       });
